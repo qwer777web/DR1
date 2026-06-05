@@ -1,0 +1,37 @@
+server:
+  port: 9100
+
+spring:
+  application:
+    name: dr1-gateway
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+    service-registry:
+      auto-registration:
+        enabled: false
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origin-patterns: "*"
+            allowed-methods: "*"
+            allowed-headers: "*"
+            allow-credentials: true
+      routes:
+        - id: dr1-auth-local
+          uri: http://localhost:9201
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+        - id: dr1-system-local
+          uri: http://localhost:9202
+          predicates:
+            - Path=/system/**
+          filters:
+            - StripPrefix=1
+
