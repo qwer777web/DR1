@@ -1,0 +1,14 @@
+server:
+  port: 9201
+
+spring:
+  application:
+    name: dr1-auth
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+    service-registry:
+      auto-registration:
+        enabled: false
+
