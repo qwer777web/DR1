@@ -1,0 +1,24 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        enabled: true
+        server-addr: localhost:8848
+    service-registry:
+      auto-registration:
+        enabled: true
+    gateway:
+      routes:
+        - id: dr1-auth-nacos
+          uri: lb://dr1-auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+        - id: dr1-system-nacos
+          uri: lb://dr1-system
+          predicates:
+            - Path=/system/**
+          filters:
+            - StripPrefix=1
+
